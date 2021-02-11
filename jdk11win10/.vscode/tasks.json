@@ -1,0 +1,60 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "g++ build active file",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-std=c++17",
+                "-w",
+                "-g",
+                "-fPIC",
+                "-Wl,-export-dynamic",
+                "-Wl,-rpath=$$ORIGIN",
+                "-I", "${JAVA_HOME}/include",
+                "-I", "${JAVA_HOME}/include/linux",
+                "${file}",
+                "-o",
+                "${workspaceFolder}/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "/usr/bin"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "cl.exe build active file",
+            "command": "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.28.29333/bin/Hostx64/x64/cl.exe",
+            "args": [
+                "/I",
+                "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.28.29333\\include",
+                "/I",
+                "C:\\Program Files\\AdoptOpenJDK\\jdk-11.0.10.9-hotspot\\include",
+                "/I",
+                "C:\\Program Files\\AdoptOpenJDK\\jdk-11.0.10.9-hotspot\\include\\win32",
+                "/I",
+                "${workspaceFolder}",
+                "/Zi",
+                "/EHsc",
+                "/Fe:",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "${file}"
+            ],
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

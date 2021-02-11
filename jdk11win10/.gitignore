@@ -1,0 +1,8 @@
+.DS_Store
+*.DS_Store
+hs_err_pid*
+vc140.pdb
+*.o
+*.so
+*.class
+

@@ -1,0 +1,13 @@
+{
+    "C_Cpp.default.cppStandard": "c++17",
+    "C_Cpp.default.cStandard": "c11",
+    "C_Cpp.default.includePath": [".",
+        "/usr/lib/jvm/java-11-openjdk-amd64/include/**",
+        "/usr/lib/jvm/java-11-openjdk-amd64/include/linux/**"
+    ],
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true
+    }    
+}
