@@ -27,6 +27,39 @@ JMain closed
 Closed main
 ```
 
+Failed output on Windows 10: 
+
+```sh
+Opening main
+Main new: 2871979580192
+Main open
+JMain opened: 2871979580192
+Opened main for id: 2871979580192; now attempting close
+JMain close: 2871979580192
+Main remove: -1353540832
+Main close
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ff83cb91360, pid=15272, tid=15336
+#
+# JRE version: OpenJDK Runtime Environment AdoptOpenJDK (11.0.10+9) (build 11.0.10+9)
+# Java VM: OpenJDK 64-Bit Server VM AdoptOpenJDK (11.0.10+9, mixed mode, tiered, compressed oops, g1 gc, windows-amd64)
+# Problematic frame:
+# C  [main.dll+0x1360]
+#
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+# An error report file with more information is saved as:
+# C:\Users\Paul\Documents\GitHub\buggy\jdk11win10\hs_err_pid15272.log
+#
+# If you would like to submit a bug report, please visit:
+#   https://github.com/AdoptOpenJDK/openjdk-support/issues
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+```
+
 _Note_ pointer numbers will change per execution
 
 If the JVM crashes, this displays the issue!
@@ -43,6 +76,7 @@ g++ -std=c++17 -c -shared-libgcc -fPIC -Wl,-export-dynamic -Wl,-rpath=$$ORIGIN -
 * Compile java `javac JavaMain.java`
 * Export path to the so file `export LD_LIBRARY_PATH=<path to .SO file>`
 * Export libstdc++ so we don't get the undefined symbol: `_ZTVN10__cxxabiv117__class_type_infoE` error `export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6`
+* Run it: `java JavaMain`
 
 Verification checks on error:
 
@@ -53,24 +87,27 @@ ldd libmain.so
 
 ## Windows Build
 
-https://stackoverflow.com/questions/1130479/how-to-build-a-dll-from-the-command-line-in-windows-using-msvc
+* Setup build environment:
 
 ```sh
-cl.exe /LD <files-to-compile>
-cl.exe /D_USRDLL /D_WINDLL <files-to-compile> <files-to-link> /link /DLL /OUT:<desired-dll-name>.dll
-
-"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\vcvars32.bat" && cl /O2 /Iall /Iyour /Iincludes /D_USRDLL /D_WINDLL /DOTHER_DEFINES <libs> <source files> /LD /Fe<dll name> /link /DEF:<def name>.def
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
 ```
 
 * Build main.dll with ms cl.exe
 
 ```sh
-$ "c:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
-$ cl /I %JDK_REPO%/src/java.base/share/native/include /I %JDK_REPO%/src/java.base/windows/native/include %JDK_REPO%/build/windows-x86_64-normal-server-release/images/jdk/lib/jvm.lib /Z7 /LD main.cpp
+cl /I "C:\Program Files\AdoptOpenJDK\jdk-11.0.10.9-hotspot\include" /I "C:\Program Files\AdoptOpenJDK\jdk-11.0.10.9-hotspot\include\win32" main.cpp /LD
 ```
+
+_Note_ update paths as needed to fit your environment
+
+* Compile java `javac JavaMain.java`
+* Run it: `java JavaMain`
 
 ### Links
 
 [Compiler Options](https://docs.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-by-category?redirectedfrom=MSDN&view=msvc-160)
 
 [DEF Module](https://docs.microsoft.com/en-us/cpp/build/reference/def-specify-module-definition-file?redirectedfrom=MSDN&view=msvc-160)
+
+[SO Question - howto build dll from cmdline](https://stackoverflow.com/questions/1130479/how-to-build-a-dll-from-the-command-line-in-windows-using-msvc)
