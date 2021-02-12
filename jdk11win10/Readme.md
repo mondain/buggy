@@ -2,7 +2,7 @@
 
 The test code here is for determining and displaying an issue present in OpenJDK 11 on Windows 10. The working Linux version is here as a check-point.
 
-## Expected Successful Output
+## Expected Output
 
 After compiling the native library and the Java class, execute it:
 
@@ -10,7 +10,7 @@ After compiling the native library and the Java class, execute it:
 java JavaMain
 ```
 
-The expected output:
+The expected successful output:
 
 ```sh
 Opening main
