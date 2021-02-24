@@ -5,4 +5,7 @@ vc140.pdb
 *.o
 *.so
 *.class
-
+*.dll
+*.lib
+*.exp
+*.obj

@@ -1,6 +1,6 @@
 # Test Code for JDK 11 Issue on Windows 10
 
-The test code here is for determining and displaying an issue present in OpenJDK 11 on Windows 10. The working Linux version is here as a check-point.
+The test code here is for determining and displaying an issue present in JDK 11 on Windows 10. The working Linux version is here as a check-point.
 
 ## Expected Output
 
@@ -31,30 +31,30 @@ Failed output on Windows 10:
 
 ```sh
 Opening main
-Main new: 2871979580192
+Main new: 2675066083424
 Main open
-JMain opened: 2871979580192
-Opened main for id: 2871979580192; now attempting close
-JMain close: 2871979580192
-Main remove: -1353540832
+JMain opened: 2675066083424
+Opened main for id: 2675066083424; now attempting close
+JMain close: 2675066083424
+Main remove: -698541984
 Main close
 #
 # A fatal error has been detected by the Java Runtime Environment:
 #
-#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ff83cb91360, pid=15272, tid=15336
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffa3cef1360, pid=11012, tid=5204
 #
-# JRE version: OpenJDK Runtime Environment AdoptOpenJDK (11.0.10+9) (build 11.0.10+9)
-# Java VM: OpenJDK 64-Bit Server VM AdoptOpenJDK (11.0.10+9, mixed mode, tiered, compressed oops, g1 gc, windows-amd64)
+# JRE version: Java(TM) SE Runtime Environment 18.9 (11.0.10+8) (build 11.0.10+8-LTS-162)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM 18.9 (11.0.10+8-LTS-162, mixed mode, tiered, compressed oops, g1 gc, windows-amd64)
 # Problematic frame:
 # C  [main.dll+0x1360]
 #
 # No core dump will be written. Minidumps are not enabled by default on client versions of Windows
 #
 # An error report file with more information is saved as:
-# C:\Users\Paul\Documents\GitHub\buggy\jdk11win10\hs_err_pid15272.log
+# C:\Users\monda\workspace\github\buggy\jdk11win10\hs_err_pid11012.log
 #
 # If you would like to submit a bug report, please visit:
-#   https://github.com/AdoptOpenJDK/openjdk-support/issues
+#   https://bugreport.java.com/bugreport/crash.jsp
 # The crash happened outside the Java Virtual Machine in native code.
 # See problematic frame for where to report the bug.
 #
@@ -63,6 +63,8 @@ Main close
 _Note_ pointer numbers will change per execution
 
 If the JVM crashes, this displays the issue!
+
+_Note_ Tested with Oracle JDK 11, AdoptJDK, and Corretto JDK 11.
 
 ## Linux Build
 
@@ -96,7 +98,13 @@ ldd libmain.so
 * Build main.dll with ms cl.exe
 
 ```sh
-cl /I "C:\Program Files\AdoptOpenJDK\jdk-11.0.10.9-hotspot\include" /I "C:\Program Files\AdoptOpenJDK\jdk-11.0.10.9-hotspot\include\win32" main.cpp /LD
+cl /I "%JAVA_HOME%\include" /I "%JAVA_HOME%\include\win32" main.cpp /LD
+```
+
+Oracle JDK example
+
+```sh
+cl /I "C:\Program Files\Java\jdk-11.0.10\include" /I "C:\Program Files\Java\jdk-11.0.10\include\win32" main.cpp /LD
 ```
 
 _Note_ update paths as needed to fit your environment
