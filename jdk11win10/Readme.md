@@ -2,6 +2,10 @@
 
 The test code here is for determining and displaying an issue present in JDK 11 on Windows 10. The working Linux version is here as a check-point.
 
+**Issue Resolved**
+
+Thanks to the Amazon Corretto contributors, the issue was resolved; the problem was the use of an unsafe conversion to `long`. Issue report with details may be found [here](https://github.com/corretto/corretto-11/issues/178)
+
 ## Expected Output
 
 After compiling the native library and the Java class, execute it:
