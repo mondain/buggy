@@ -38,7 +38,7 @@ Main* MainContext::NewMain()
     return 0;
 }
 
-Main* MainContext::GetMain(long id)
+Main* MainContext::GetMain(jlong id)
 {
     uintptr_t locate = (uintptr_t) id;
     Main *m = (Main *) locate;
@@ -48,7 +48,7 @@ Main* MainContext::GetMain(long id)
     return 0;
 }
 
-long MainContext::RemoveMain(long id)
+jlong MainContext::RemoveMain(jlong id)
 {
 	std::cout << "Main remove: " << id << std::endl;
     uintptr_t locate = (uintptr_t) id;

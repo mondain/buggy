@@ -23,8 +23,8 @@ class MainContext
     public:
         MainContext();
         Main* NewMain();
-        Main* GetMain(long id);
-        long RemoveMain(long id);
+        Main* GetMain(jlong id);
+        jlong RemoveMain(jlong id);
         ~MainContext();
 };
 
